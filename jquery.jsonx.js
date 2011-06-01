@@ -39,14 +39,14 @@
  * 
  * Usage:
  * 
- * (jQuery) $(*).jsonx(''|{});
- * (jQuery) $.jsonx(''|{});
- * (jQuery) $(*).jsonx('build', ''|{});
- * (jQuery) $.jsonx('build', ''|{});
- * (Object) $(*).jsonx('parse', ''|jQuery);
- * (Object) $.jsonx('parse', ''|jQuery);
- * (String) $(*).jsonx('stringify', {}|jQuery);
- * (String) $.jsonx('stringify', {}|jQuery);
+ * (jQuery) $(*).jsonx(''|[]);
+ * (jQuery) $.jsonx(''|[]);
+ * (jQuery) $(*).jsonx('build', ''|[]);
+ * (jQuery) $.jsonx('build', ''|[]);
+ * (Array) $(*).jsonx('parse', ''|jQuery);
+ * (Array) $.jsonx('parse', ''|jQuery);
+ * (String) $(*).jsonx('stringify', []|jQuery);
+ * (String) $.jsonx('stringify', []|jQuery);
  * 
  * @author <a href="http://github.com/neocotic">Alasdair Mercer</a>
  * @requires jQuery
@@ -55,7 +55,7 @@
     var api = {
         /**
          * <p></p>
-         * @param {String|Object} value The JSONX string or object to be
+         * @param {String|Array} value The JSONX string or array to be
          * transformed in to a jQuery object.
          * @returns {jQuery} The generated jQuery object.
          */
@@ -94,9 +94,9 @@
         /**
          * <p></p>
          * @param {String|jQuery} [value] The JSONX string to be parsed or the
-         * jQuery object to be transformed in to a JSONX object. If omitted, an
+         * jQuery object to be transformed in to a JSONX array. If omitted, an
          * attempt will be made to transform the current jQuery object.
-         * @returns {Object} The generated JSONX object.
+         * @returns {Array} The generated JSONX array.
          */
         parse: function (value) {
             function convertJQuery(obj) {
@@ -134,7 +134,7 @@
         },
         /**
          * <p></p>
-         * @param {String|jQuery} [value] The JSONX or jQuery object to be
+         * @param {String|jQuery} [value] The JSONX array or jQuery object to be
          * transformed in to a JSONX string. If omitted, an attempt will be made
          * to transform the current jQuery object.
          * @return {String} The generated JSONX string.
