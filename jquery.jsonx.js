@@ -39,17 +39,66 @@
  * 
  * Usage:
  * 
- * (Object) $(*).jsonx();
- * (Object) $.jsonx(*);
- * (jQuery) $(*).jsonx('parse', ''|{});
- * (jQuery) $.jsonx('parse', ''|{});
- * (String) $(*).jsonx('stringify');
- * (String) $.jsonx('stringify', {});
+ * (jQuery) $(*).jsonx(''|{});
+ * (jQuery) $.jsonx(''|{});
+ * (jQuery) $(*).jsonx('build', ''|{});
+ * (jQuery) $.jsonx('build', ''|{});
+ * (Object) $(*).jsonx('parse', ''|jQuery);
+ * (Object) $.jsonx('parse', ''|jQuery);
+ * (String) $(*).jsonx('stringify', {}|jQuery);
+ * (String) $.jsonx('stringify', {}|jQuery);
+ * 
  * @author <a href="http://github.com/neocotic">Alasdair Mercer</a>
+ * @requires jQuery
  */
 (function ($) {
-    var methods = {
-        init: function (value) {
+    var api = {
+        /**
+         * <p></p>
+         * @param {String|Object} value The JSONX string or object to be
+         * transformed in to a jQuery object.
+         * @returns {jQuery} The generated jQuery object.
+         */
+        build: function (value) {
+            function convertJsonx(obj, parent) {
+                var arr = [],
+                    ele = {};
+                if ($.isArray(obj)) {
+                    if (!obj.length || typeof obj[0] !== 'string') {
+                        throw new SyntaxError('JSONX.build');
+                    }
+                    ele = $(document.createElement(obj[0]));
+                    if (obj.length > 1) {
+                        if ($.isPlainObject(obj[1])) {
+                            ele.attr(obj[1]);
+                            if (obj.length > 2) {
+                                arr = Array.prototype.slice.call(obj, 2);
+                            }
+                        } else {
+                            arr = Array.prototype.slice.call(obj, 1);
+                        }
+                        if (arr.length) {
+                            convertJsonx(arr, ele);
+                        }
+                    }
+                } else if (typeof obj === 'string') {
+                    parent.append(obj);
+                }
+                return parent;
+            }
+            if (typeof value === 'string') {
+                value = api.parse(value);
+            }
+            return convertJsonx(value, $('<x/>')).contents();
+        },
+        /**
+         * <p></p>
+         * @param {String|jQuery} [value] The JSONX string to be parsed or the
+         * jQuery object to be transformed in to a JSONX object. If omitted, an
+         * attempt will be made to transform the current jQuery object.
+         * @returns {Object} The generated JSONX object.
+         */
+        parse: function (value) {
             function convertJQuery(obj) {
                 var ret = [];
                 obj.each(function () {
@@ -76,55 +125,32 @@
                 });
                 return ret;
             }
-            if (typeof value !== 'undefined') {
-                return convertJQuery($(value));
-            }
-            return convertJQuery(this);
-        },
-        parse: function (value) {
-            function convertJsonx(obj, parent) {
-                var arr = [],
-                    ele = {};
-                if ($.isArray(obj)) {
-                    if (!obj.length || typeof obj[0] !== 'string') {
-                        throw new SyntaxError('JSONX.parse');
-                    }
-                    ele = $(document.createElement(obj[0]));
-                    if (obj.length > 1) {
-                        if ($.isPlainObject(obj[1])) {
-                            ele.attr(obj[1]);
-                            if (obj.length > 2) {
-                                arr = Array.prototype.slice.call(obj, 2);
-                            }
-                        } else {
-                            arr = Array.prototype.slice.call(obj, 1);
-                        }
-                        if (arr.length) {
-                            convertJsonx(arr, ele);
-                        }
-                    }
-                } else if (typeof obj === 'string') {
-                    parent.append(obj);
-                }
-                return parent;
-            }
             if (typeof value === 'string') {
-                value = JSON.parse(value);
+                return JSON.parse(value);
             }
-            // TODO: Should this be children()?
-            return convertJsonx(value, $('<x/>')).contents();
+            value = value || this;
+            return convertJQuery($(value));
         },
+        /**
+         * <p></p>
+         * @param {String|jQuery} [value] The JSONX or jQuery object to be
+         * transformed in to a JSONX string. If omitted, an attempt will be made
+         * to transform the current jQuery object.
+         * @return {String} The generated JSONX string.
+         */
         stringify: function (value) {
             if (typeof value === 'undefined') {
-                value = this.jsonx();
+                value = api.parse(this);
+            } else if (typeof value.jquery === 'string') {
+                value = api.parse(value);
             }
             return JSON.stringify(value);
         }
     };
-    $.fn.jsonx = function (method) {
-        if (methods[method]) {
-            return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
+    $.fn.jsonx = function (arg) {
+        if (api[arg]) {
+            return api[arg].apply(this, Array.prototype.slice.call(arguments, 1));
         }
-        return methods.init.apply(this, arguments);
+        return api.build.apply(this, arguments);
     };
 })(jQuery);
