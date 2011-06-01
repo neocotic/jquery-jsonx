@@ -65,7 +65,7 @@
                     ele = {};
                 if ($.isArray(obj)) {
                     if (!obj.length || typeof obj[0] !== 'string') {
-                        throw new SyntaxError('JSONX.build');
+                        $.error('jsonx.build: Syntax error');
                     }
                     ele = $(document.createElement(obj[0]));
                     if (obj.length > 1) {
@@ -107,6 +107,7 @@
                         contents = $this.contents(),
                         i;
                     ret.push(this.nodeName.toLowerCase());
+                    // TODO: Ensure logic is sound and no mapping is required (e.g. for keywords)
                     if (this.attributes.length) {
                         for (i = 0; i < this.attributes.length; i++) {
                             attrs[this.attributes[i].name] = this.attributes[i].value;
