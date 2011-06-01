@@ -134,7 +134,7 @@
         },
         /**
          * <p></p>
-         * @param {String|jQuery} [value] The JSONX array or jQuery object to be
+         * @param {Array|jQuery} [value] The JSONX array or jQuery object to be
          * transformed in to a JSONX string. If omitted, an attempt will be made
          * to transform the current jQuery object.
          * @return {String} The generated JSONX string.
