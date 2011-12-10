@@ -1,6 +1,6 @@
-# [jQuery JSONX](http://forchoon.com/projects/javascript/jquery-jsonx/)
+# [jquery-jsonx][]
 
-A jQuery plugin which allows simple transformation between XML and
+A [jQuery][] plugin which allows simple transformation between XML and
 JSON.
 
 ## JSON to XML
@@ -28,7 +28,10 @@ $.jsonx('stringify', jQuery|Object[])
 
 ## Further Information
 
-If you want more information or examples of using this library please visit the
+If you want more information or examples of using this plugin please visit the
 project's homepage;
 
-<http://forchoon.com/projects/javascript/jquery-jsonx/>
+http://neocotic.com/jquery-jsonx
+
+[jquery]: http://jquery.com
+[jquery-jsonx]: http://neocotic.com/jquery-jsonx

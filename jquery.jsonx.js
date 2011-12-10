@@ -1,19 +1,16 @@
 /*!
- * jQuery JSONX v1.0.0
- * http://forchoon.com/projects/javascript/jquery-jsonx/
- *
+ * jquery-jsonx v1.0.0
+ * 
  * Copyright 2011, Alasdair Mercer
- * Licensed under the GPL Version 3 license.
+ * Freely distributable under the MIT license.
+ * 
+ * For all details and documentation:
+ * http://neocotic.com/jquery-jsonx
  */
-
-/*jslint
-    browser: true, sloppy: true, vars: true, plusplus: true, maxerr: 50,
-    indent: 4
-*/
 
 /**
  * <p>jQuery plugin to support XML to JSON transformations and vice versa.</p>
- * @author <a href="http://github.com/neocotic">Alasdair Mercer</a>
+ * @author <a href="http://neocotic.com">Alasdair Mercer</a>
  * @version 1.0.0
  * @requires jQuery
  * @requires JSON
