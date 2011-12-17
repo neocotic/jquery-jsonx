@@ -15,8 +15,6 @@ This is a [jQuery][] implementation for the [JSONX][] JavaScript library which
 provides the same transformation support as well as additional manipulation and
 management using the powerful [jQuery][] framework.
 
-More information is coming soon…
-
 ## JSON to XML
 
 ```
